@@ -47,7 +47,7 @@ public class ProdutoController {
 	
 	@GetMapping("/nome/{nome}")
 	public ResponseEntity<List<Produto>> getByNome(@PathVariable String nome){
-		return ResponseEntity.ok(produtoRepository.findAllByNomeContainingIgnoreCase(nome));
+		return ResponseEntity.ok(produtoRepository.findByNomeContainingIgnoreCase(nome));
 	}
 	
 	@PostMapping 
@@ -106,4 +106,9 @@ public class ProdutoController {
 		return ResponseEntity.ok(produtoRepository.buscarProdutosEntre(inicio, fim));
 	}
 
+	@GetMapping("/lista_preco/{p1}/{p2}/{p3}")
+	public ResponseEntity<List<Produto>> getByListaPreco(@PathVariable BigDecimal p1, @PathVariable BigDecimal p2, @PathVariable BigDecimal p3){
+		List<BigDecimal> listaPreco = List.of(p1, p2, p3);
+		return ResponseEntity.ok(produtoRepository.findByPrecoIn(listaPreco));
+	}
 }

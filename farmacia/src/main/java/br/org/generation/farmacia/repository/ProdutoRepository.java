@@ -13,7 +13,7 @@ import br.org.generation.farmacia.model.Produto;
 @Repository
 public interface ProdutoRepository extends JpaRepository<Produto, Long>{
 	
-	public List <Produto> findAllByNomeContainingIgnoreCase(String nome);
+	public List <Produto> findByNomeContainingIgnoreCase(@Param("nome") String nome);
 	
 	/**
 	 *  Método Personalizado - Buscar por Nome do Produto e pelo Nome do Laboratório
@@ -54,4 +54,7 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long>{
 	 */
 	@Query(value = "select * from tb_produtos where preco between :inicio and :fim", nativeQuery = true)
 	public List <Produto> buscarProdutosEntre(@Param("inicio") BigDecimal inicio, @Param("fim") BigDecimal fim);
+
+	public List<Produto> findByPrecoIn(List<BigDecimal> preco);
+
 }
